@@ -34,6 +34,7 @@ const jogadores = {
   joaovictor: { nome: "João Victor",       categoria: "esporte" },
   sarara:   { nome: "Sarará",              categoria: "esporte" },
   lk:       { nome: "LK",                  categoria: "esporte" },
+  fumes:    { nome: "Fumes",               categoria: "esporte" },
 };
 
 /* EDIÇÕES ANTERIORES
@@ -70,7 +71,8 @@ const edicoes = [
     /* data e local são opcionais */
     duelos: [
       { a: "binho", b: "tiga", vencedor: "binho" },
-      { a: "binho", b: "lk",   vencedor: "binho" },
+      { a: "binho", b: "lk",    vencedor: "binho" },
+      { a: "binho", b: "fumes", vencedor: "fumes" },
     ],
   },
 ];
