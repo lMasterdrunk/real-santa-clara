@@ -14,7 +14,7 @@
 const jogadores = {
   xavola:   { nome: "Xavola",              categoria: "esporte", frase: "Das galáxias para Mossoró! De Mossoró para o Mundo!" },
   sato:     { nome: "Japa Sato (Hideki)",  categoria: "esporte" },
-  binho:    { nome: "Edvaldo (Binho)",     categoria: "veterano", frase: "CoRUUUUUUUUUUja" },
+  binho:    { nome: "Binho", categoria: "veterano", frase: "CoRUUUUUUUUUUja" },
   leozinho: { nome: "Leozinho",            categoria: "esporte" },
   paizao:   { nome: "Paizão do Rachão",    categoria: "veterano", frase: "Rei da Cavada - Tempo Ruim o Tempo Todo" },
   tiga:     { nome: "TiGa (9 Verdadeiro)", categoria: "veterano" },
