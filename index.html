@@ -312,18 +312,20 @@
       stats[d.vencedor].v++; stats[perdedor].d++;
     }
   }));
+  const aproveitamento = s => s.v + s.d ? s.v / (s.v + s.d) : -1;  /* sem jogos fica por último */
   const rankingTotal = Object.values(stats).sort((x, y) =>
-    y.v - x.v || x.d - y.d || jog(x.id).nome.localeCompare(jog(y.id).nome, 'pt-BR'));
+    aproveitamento(y) - aproveitamento(x) || y.v - x.v || x.d - y.d ||
+    jog(x.id).nome.localeCompare(jog(y.id).nome, 'pt-BR'));
   const avisoRanking = lancados < total
-    ? `${lancados} de ${total} resultados lançados. Ordem por vitórias.`
-    : 'Ordem por vitórias; empate desempata por menos derrotas.';
+    ? `${lancados} de ${total} resultados lançados. Ordem por % de aproveitamento.`
+    : 'Ordem por % de aproveitamento; empate desempata por mais vitórias.';
 
   function mostrarRanking(categoria) {
     ['veterano', 'esporte'].forEach(c => $('tab-' + c).setAttribute('aria-selected', c === categoria));
     const ranking = rankingTotal.filter(s => (jog(s.id).categoria || 'esporte') === categoria);
     $('aviso-ranking').textContent = avisoRanking;
     $('lista-ranking').innerHTML = ranking.map((s, i) => {
-    const jogos = s.v + s.d, apr = jogos ? ' · ' + Math.round(s.v * 100 / jogos) + '% aprov.' : '';
+    const jogos = s.v + s.d, apr = jogos ? ' · ' + Math.round(s.v * 100 / jogos) + '% de aproveitamento' : '';
     return `<li>
       <span class="pos">${jogos ? (i + 1) + 'º' : '–'}</span>${avatar(s.id)}
       <div class="info"><div class="nm"${tip(s.id)}>${esc(jog(s.id).nome)}</div>
