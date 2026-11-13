@@ -58,7 +58,7 @@
 
   /* ---------- topo ---------- */
   header{text-align:center; padding:36px 0 8px}
-  .logo{width:min(440px,88vw); height:auto; display:block; margin:0 auto;
+  .logo{width:min(360px,80vw); height:auto; display:block; margin:0 auto;
         filter:drop-shadow(0 6px 18px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(209,22,43,.35))}
   .lema{margin-top:10px; font-weight:800; font-style:italic; font-size:18px; letter-spacing:4px; color:var(--ouro)}
   .lema span{color:var(--vermelho)}
@@ -98,6 +98,15 @@
     box-shadow:0 0 18px rgba(247,198,0,.5)}
   .local{margin:16px 0 0; text-align:center}
   .local .pincel{font-size:clamp(18px,5vw,26px)}
+  .local .endereco{display:block; margin-top:10px; font-weight:800; font-size:clamp(17px,4.6vw,22px); letter-spacing:1px;
+    color:var(--branco); text-transform:uppercase}
+  .cinturao{margin-top:26px; text-align:center}
+  .cinturao-img{display:block; width:min(340px,86%); height:auto; margin:0 auto;
+    -webkit-mask-image:radial-gradient(ellipse 75% 85% at 50% 50%,#000 78%,transparent 100%);
+            mask-image:radial-gradient(ellipse 75% 85% at 50% 50%,#000 78%,transparent 100%);
+    filter:drop-shadow(0 0 14px rgba(247,198,0,.35))}
+  .cinturao-nome{text-align:center; margin:-4px 0 -2px}
+  .cinturao-nome .pincel{font-size:clamp(16px,4.4vw,22px)}
 
   /* avatar */
   .av{flex:none; width:44px; height:44px; border-radius:50%; overflow:hidden; display:grid; place-items:center;
@@ -105,15 +114,17 @@
     font-family:Anton,Impact,sans-serif; color:var(--ouro); font-size:16px}
   .av img{width:100%; height:100%; object-fit:cover}
 
-  /* ---------- abas ---------- */
-  .abas{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:44px 0 18px}
+  /* ---------- seções ---------- */
+  main > section{margin-top:44px}
+
+  /* abas do ranking (Veterano em destaque, Esporte depois) */
+  .abas{display:grid; grid-template-columns:1.3fr 1fr; gap:10px; margin:0 0 18px}
   .abas button{font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase; font-size:22px;
     letter-spacing:1px; padding:12px 8px; cursor:pointer; color:var(--branco); background:var(--painel2);
     border:0; transform:skewX(-10deg); box-shadow:inset 0 0 0 2px var(--vermelho)}
   .abas button span{display:inline-block; transform:skewX(10deg)}
   .abas button[aria-selected="true"]{background:linear-gradient(180deg,var(--ouro-claro),var(--ouro));
     color:#111; box-shadow:0 0 22px rgba(247,198,0,.45)}
-  [role="tabpanel"][hidden]{display:none}
 
   .aviso{text-align:center; color:var(--cinza); font-size:16px; margin:0 0 12px}
 
@@ -154,45 +165,63 @@
     .duelo-in{padding:8px 20px; gap:6px}
     .av{width:36px; height:36px; font-size:13px}
     .vs{font-size:16px; padding:5px 9px}
-    .abas button{font-size:19px}
   }
 </style>
 </head>
 <body>
-<header class="wrap">
+
+<!-- ============ SEÇÃO 1 · CABEÇALHO ============
+     Logo, lema e chamada do próximo X1 (mês e data) -->
+<header id="secao-cabecalho" class="wrap">
   <img class="logo" src="img/logo-x1-do-santa.png" alt="X1 do Santa">
   <div class="lema">★ VÁRZEA É NO SANTA! ★</div>
-</header>
 
-<main class="wrap">
-  <section class="proximo" aria-labelledby="t-proximo">
-    <h1 id="t-proximo" class="titulo-ouro">Próximo X1</h1>
+  <div class="proximo">
+    <h1 class="titulo-ouro">Próximo X1</h1>
     <div class="risco"></div>
     <div class="pincel vermelho mes" id="prox-mes"></div>
     <span class="pincel ouro quando" id="prox-data"></span>
-
-    <div class="faixa-titulo"><h2>Duelos confirmados</h2></div>
-    <div id="prox-duelos"></div>
-    <p class="local"><span class="pincel ouro" id="prox-local"></span></p>
-  </section>
-
-  <div class="abas" role="tablist" aria-label="Participantes">
-    <button role="tab" id="tab-ranking" aria-controls="painel-ranking" aria-selected="true"><span>Ranking</span></button>
-    <button role="tab" id="tab-edicoes" aria-controls="painel-edicoes" aria-selected="false"><span>Edições</span></button>
   </div>
+</header>
 
-  <section role="tabpanel" id="painel-ranking" aria-labelledby="tab-ranking">
-    <p class="aviso" id="aviso-ranking"></p>
-    <ol class="rank" id="lista-ranking"></ol>
+<main class="wrap">
+
+  <!-- ============ SEÇÃO 2 · DOIS CINTURÕES EM JOGO ============ -->
+  <section id="secao-cinturoes" aria-labelledby="t-cinturoes">
+    <div class="faixa-titulo"><h2 id="t-cinturoes">Dois cinturões em jogo</h2></div>
+    <div id="prox-cinturoes"></div>
   </section>
 
-  <section role="tabpanel" id="painel-edicoes" aria-labelledby="tab-edicoes" hidden>
+  <!-- ============ SEÇÃO 3 · DUELOS CONFIRMADOS ============ -->
+  <section id="secao-duelos" aria-labelledby="t-duelos">
+    <div class="faixa-titulo"><h2 id="t-duelos">Duelos confirmados</h2></div>
+    <div id="prox-duelos"></div>
+    <p class="local"><span class="pincel ouro" id="prox-local"></span>
+      <span class="endereco" id="prox-endereco"></span></p>
+  </section>
+
+  <!-- ============ SEÇÃO 4 · RANKING DOS PARTICIPANTES ============ -->
+  <section id="secao-ranking" aria-labelledby="t-ranking">
+    <div class="faixa-titulo"><h2 id="t-ranking">Ranking</h2></div>
+    <div class="abas" role="tablist" aria-label="Categoria do ranking">
+      <button role="tab" id="tab-veterano" aria-selected="true"><span>Veterano</span></button>
+      <button role="tab" id="tab-esporte" aria-selected="false"><span>Esporte</span></button>
+    </div>
+    <p class="aviso" id="aviso-ranking"></p>
+    <ol class="rank" id="lista-ranking" role="tabpanel"></ol>
+  </section>
+
+  <!-- ============ SEÇÃO 5 · EDIÇÕES ANTERIORES ============ -->
+  <section id="secao-edicoes" aria-labelledby="t-edicoes">
+    <div class="faixa-titulo"><h2 id="t-edicoes">Edições</h2></div>
     <div class="chips" id="chips"></div>
     <p class="ed-info" id="ed-info"></p>
     <div id="ed-duelos"></div>
   </section>
+
 </main>
 
+<!-- ============ SEÇÃO 6 · RODAPÉ ============ -->
 <footer>
   <strong>REAL SANTA CLARA</strong>
   Várzea é no Santa! Respeito, amizade e futebol.
@@ -230,6 +259,12 @@
   $('prox-mes').textContent = proximo.mes;
   $('prox-data').textContent = proximo.data;
   $('prox-local').textContent = 'Local: ' + proximo.local;
+  $('prox-endereco').textContent = proximo.endereco || '';
+  $('prox-cinturoes').innerHTML = proximo.cinturoes.map(c =>
+    `<div class="cinturao">
+       <img class="cinturao-img" src="${esc(c.imagem)}" alt="Cinturão ${esc(c.nome)}">
+       <div class="cinturao-nome"><span class="pincel vermelho">${esc(c.nome)}</span></div>
+     </div>` + linhaDuelo(c, false)).join('');
   $('prox-duelos').innerHTML = proximo.duelos.map(d => linhaDuelo(d, false)).join('');
 
   /* ranking calculado a partir das edições */
@@ -245,12 +280,17 @@
       stats[d.vencedor].v++; stats[perdedor].d++;
     }
   }));
-  const ranking = Object.values(stats).sort((x, y) =>
+  const rankingTotal = Object.values(stats).sort((x, y) =>
     y.v - x.v || x.d - y.d || jog(x.id).nome.localeCompare(jog(y.id).nome, 'pt-BR'));
-  $('aviso-ranking').textContent = lancados < total
+  const avisoRanking = lancados < total
     ? `${lancados} de ${total} resultados lançados. Ordem por vitórias.`
     : 'Ordem por vitórias; empate desempata por menos derrotas.';
-  $('lista-ranking').innerHTML = ranking.map((s, i) => {
+
+  function mostrarRanking(categoria) {
+    ['veterano', 'esporte'].forEach(c => $('tab-' + c).setAttribute('aria-selected', c === categoria));
+    const ranking = rankingTotal.filter(s => (jog(s.id).categoria || 'esporte') === categoria);
+    $('aviso-ranking').textContent = avisoRanking;
+    $('lista-ranking').innerHTML = ranking.map((s, i) => {
     const jogos = s.v + s.d, apr = jogos ? ' · ' + Math.round(s.v * 100 / jogos) + '% aprov.' : '';
     return `<li>
       <span class="pos">${jogos ? (i + 1) + 'º' : '–'}</span>${avatar(s.id)}
@@ -258,7 +298,11 @@
         <div class="sub">${s.ed.size} ${s.ed.size > 1 ? 'edições' : 'edição'}${apr}</div></div>
       <div class="placar"><b class="v">${s.v}<small>VIT</small></b><b class="d">${s.d}<small>DER</small></b></div>
     </li>`;
-  }).join('');
+    }).join('');
+  }
+  $('tab-veterano').onclick = () => mostrarRanking('veterano');
+  $('tab-esporte').onclick = () => mostrarRanking('esporte');
+  mostrarRanking('veterano');
 
   /* edições */
   function mostrarEdicao(i) {
@@ -272,14 +316,6 @@
   $('chips').innerHTML = edicoes.map((ed, i) => `<button type="button">${esc(ed.titulo)}</button>`).join('');
   $('chips').querySelectorAll('button').forEach((b, i) => b.onclick = () => mostrarEdicao(i));
   mostrarEdicao(0);
-
-  /* abas */
-  const abas = [['tab-ranking', 'painel-ranking'], ['tab-edicoes', 'painel-edicoes']];
-  abas.forEach(([t]) => $(t).onclick = () => abas.forEach(([t2, p2]) => {
-    const ativo = t2 === t;
-    $(t2).setAttribute('aria-selected', ativo);
-    $(p2).hidden = !ativo;
-  }));
 </script>
 </body>
 </html>
