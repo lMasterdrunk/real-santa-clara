@@ -41,3 +41,6 @@ document.addEventListener('mouseover', e => {
   timerTip = setTimeout(() => mostrarTip(el), 2000);
 });
 addEventListener('scroll', esconderTip, { passive: true });
+
+/* número do palpite com 3 dígitos (7 -> "007"), igual na página do bolão e na do organizador */
+const fmtNumero = n => String(n).padStart(3, '0');

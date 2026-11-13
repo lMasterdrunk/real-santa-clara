@@ -13,7 +13,7 @@
  *   O organizador abre: https://www.x1dosanta.com/gerenciamentobolao.html#SUA_CHAVE
  *   A chave fica só no script e no link do organizador, nunca no repositório do site.
  *
- * Colunas da aba "Palpites":  Data | Nome | WhatsApp | Pago | Palpites
+ * Colunas da aba "Palpites":  Data | Nome | WhatsApp | Pago | Palpites | Número
  * O organizador marca o pagamento pela página de gerenciamento (ou digita SIM na coluna "Pago").
  * O WhatsApp NUNCA é enviado ao site público.
  */
@@ -28,10 +28,19 @@ function aba_() {
   let aba = planilha.getSheetByName(ABA);
   if (!aba) {
     aba = planilha.insertSheet(ABA);
-    aba.appendRow(['Data', 'Nome', 'WhatsApp', 'Pago', 'Palpites']);
+    aba.appendRow(['Data', 'Nome', 'WhatsApp', 'Pago', 'Palpites', 'Número']);
     aba.setFrozenRows(1);
   }
+  if (aba.getRange(1, 6).getValue() === '') aba.getRange(1, 6).setValue('Número');
   return aba;
+}
+
+/** Próximo número de palpite (1, 2, 3...). Fica guardado à parte, então apagar linhas de teste não repete números. */
+function proximoNumero_() {
+  const props = PropertiesService.getScriptProperties();
+  const numero = Number(props.getProperty('ULTIMO_NUMERO') || 0) + 1;
+  props.setProperty('ULTIMO_NUMERO', String(numero));
+  return numero;
 }
 
 function json_(obj) {
@@ -59,13 +68,17 @@ function admin_(dados) {
 
   if (dados.acao === 'listar') {
     const n = aba.getLastRow() - 1;
-    const linhas = n > 0 ? aba.getRange(2, 1, n, 5).getValues() : [];
+    const linhas = n > 0 ? aba.getRange(2, 1, n, 6).getValues() : [];
     const entradas = [];
     linhas.forEach(function (l, i) {
       if (String(l[1]).trim() === '') return;
       let palpites = null;
       try { palpites = JSON.parse(l[4]); } catch (_) {}
+      // Linhas antigas, sem número, ganham um agora.
+      let numero = Number(l[5]);
+      if (!numero) { numero = proximoNumero_(); aba.getRange(i + 2, 6).setValue(numero); }
       entradas.push({
+        numero: numero,
         linha: i + 2,
         data: l[0] instanceof Date ? Utilities.formatDate(l[0], 'America/Sao_Paulo', 'dd/MM/yyyy HH:mm') : String(l[0]),
         nome: String(l[1]),
@@ -119,13 +132,21 @@ function doPost(e) {
     }
 
     const aba = aba_();
-    const linhas = aba.getLastRow() > 1 ? aba.getRange(2, 3, aba.getLastRow() - 1, 1).getValues() : [];
+    const linhas = aba.getLastRow() > 1 ? aba.getRange(2, 2, aba.getLastRow() - 1, 2).getValues() : [];
     // O WhatsApp pode ser salvo como número pela planilha; compara só os dígitos.
-    if (linhas.some(function (l) { return String(l[0]).replace(/\D/g, '') === whatsapp; }))
+    if (linhas.some(function (l) { return String(l[1]).replace(/\D/g, '') === whatsapp; }))
       return json_({ ok: false, erro: 'Este WhatsApp já enviou palpites.' });
+    // Homônimos são permitidos (vários "Lucas"), desde que o nome informado seja diferente.
+    // Só bloqueia se o nome completo digitado for igual (sem acento/maiúscula) ao de alguém que já enviou.
+    const normaliza = function (s) {
+      return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+    };
+    if (linhas.some(function (l) { return normaliza(l[0]) === normaliza(nome); }))
+      return json_({ ok: false, erro: 'Já existe um palpite com o nome "' + nome + '". Se for outra pessoa, informe também o sobrenome (ou segundo nome).' });
 
-    aba.appendRow([new Date(), nome, "'" + whatsapp, 'NÃO', JSON.stringify(limpos)]);
-    return json_({ ok: true });
+    const numero = proximoNumero_();
+    aba.appendRow([new Date(), nome, "'" + whatsapp, 'NÃO', JSON.stringify(limpos), numero]);
+    return json_({ ok: true, numero: numero });
   } catch (err) {
     return json_({ ok: false, erro: 'Erro ao salvar. Tente novamente.' });
   } finally {

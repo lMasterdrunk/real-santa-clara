@@ -57,7 +57,7 @@ const bolao = {
   pix: "",
   /* texto provisório no lugar da chave Pix (use só enquanto "pix" estiver vazio) */
   pixMensagem: "Mandar Para o Lucas Baroa",
-  aviso: "Depois de enviar seus palpites, faça o pagamento e mande o comprovante no privado ao organizador. Só concorre quem pagou. Em caso de empate em 1º lugar, o prêmio é dividido igualmente entre os empatados.",
+  aviso: "Depois de enviar seus palpites você recebe o número do seu palpite: faça o pagamento colocando esse número na descrição do Pix. Só concorre quem pagou. Em caso de empate em 1º lugar, o prêmio é dividido igualmente entre os empatados.",
   pontuacao: [
     { pts: 4, texto: "Acertou o empate exato e o vencedor nos pênaltis" },
     { pts: 3, texto: "Acertou o placar exato" },

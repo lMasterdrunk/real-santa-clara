@@ -56,6 +56,18 @@ function atualizarPenaltis(cx) {
 document.querySelectorAll('.palpite').forEach(cx =>
   cx.querySelectorAll('.gols input').forEach(i => i.addEventListener('input', () => atualizarPenaltis(cx))));
 
+/* mostra o número do palpite, para a pessoa colocar na descrição do Pix */
+function mostrarRecibo(numero) {
+  $('b-numero-valor').textContent = numero;
+  $('b-numero').hidden = false;
+  $('b-numero-copiar').onclick = async () => {
+    const botao = $('b-numero-copiar');
+    try { await navigator.clipboard.writeText(numero); botao.textContent = 'Copiado!'; }
+    catch (_) { botao.textContent = 'Anote o número'; }
+    setTimeout(() => botao.textContent = 'Copiar número', 2000);
+  };
+}
+
 function mensagem(texto, erro) {
   const m = $('b-msg'); m.textContent = texto; m.hidden = false; m.classList.toggle('erro', !!erro);
   m.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -98,10 +110,20 @@ $('form-bolao').addEventListener('submit', async e => {
     });
     const dados = await resp.json();
     if (!dados.ok) throw new Error(dados.erro || 'Não foi possível salvar.');
-    try { localStorage.setItem('x1-bolao-enviado', nome); } catch (_) {}
+    const numero = dados.numero ? fmtNumero(dados.numero) : '';
+    try {
+      localStorage.setItem('x1-bolao-enviado', nome);
+      if (numero) localStorage.setItem('x1-bolao-numero', numero);
+    } catch (_) {}
     $('form-bolao').reset();
     document.querySelectorAll('.penaltis').forEach(p => p.hidden = true);
-    mensagem(`Palpites de ${nome} enviados! Agora faça o Pix de ${bolao.valor} e mande o comprovante no privado ao organizador. Só concorre quem pagou.`);
+    if (numero) {
+      mensagem(`Palpites de ${nome} enviados! Faça o Pix de ${bolao.valor} com o número ${numero} na descrição. Só concorre quem pagou.`);
+      mostrarRecibo(numero);
+      $('b-numero').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      mensagem(`Palpites de ${nome} enviados! Agora faça o Pix de ${bolao.valor} e mande o comprovante no privado ao organizador. Só concorre quem pagou.`);
+    }
     carregarRanking();
   } catch (err) {
     mensagem(`${err.message} Se não tiver certeza de que foi salvo, fale com o organizador antes de tentar de novo.`, true);
@@ -117,7 +139,11 @@ else $('b-estado').textContent = `Palpites abertos até ${quando}.`;
 $('b-enviar').disabled = !abertoParaEnvio();
 try {
   const antes = localStorage.getItem('x1-bolao-enviado');
-  if (antes && abertoParaEnvio()) $('b-estado').textContent += ` Neste aparelho já foram enviados palpites como "${antes}".`;
+  const num = localStorage.getItem('x1-bolao-numero');
+  if (antes && abertoParaEnvio()) {
+    $('b-estado').textContent += ` Neste aparelho já foram enviados palpites como "${antes}"${num ? ` (número ${num})` : ''}.`;
+    if (num) mostrarRecibo(num);
+  }
 } catch (_) {}
 
 /* ---------- pontuação ---------- */

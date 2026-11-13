@@ -55,15 +55,18 @@ function resumo() {
 function desenharLista() {
   const termo = $('g-busca').value.trim().toLowerCase();
   const so = $('g-filtro').value;
+  const digitos = termo.replace(/\D/g, '');
   const visiveis = entradas.filter(x =>
     (so === 'todos' || (so === 'pagos') === x.pago) &&
-    (!termo || x.nome.toLowerCase().includes(termo) || x.whatsapp.includes(termo.replace(/\D/g, '') || '\0')));
+    (!termo || x.nome.toLowerCase().includes(termo) ||
+      (digitos && (x.whatsapp.includes(digitos) || String(x.numero) === String(Number(digitos))))))
+    .sort((a, b) => a.numero - b.numero);
   $('g-lista').innerHTML = visiveis.length ? visiveis.map(x => `
     <li class="ger-item${x.pago ? ' pago' : ''}" data-linha="${x.linha}">
       <label class="ger-pago"><input type="checkbox" ${x.pago ? 'checked' : ''} aria-label="Pagamento de ${esc(x.nome)} confirmado">
         <span>${x.pago ? 'PAGO' : 'PAGO?'}</span></label>
       <div class="info">
-        <div class="nm">${esc(x.nome)}</div>
+        <div class="nm"><span class="ger-num">Nº ${esc(fmtNumero(x.numero))}</span> ${esc(x.nome)}</div>
         <div class="sub"><a href="${esc(linkZap(x.whatsapp))}" target="_blank" rel="noopener">${esc(formatarZap(x.whatsapp))}</a>
           · enviado em ${esc(x.data)}</div>
         <details><summary>Ver palpites</summary>
