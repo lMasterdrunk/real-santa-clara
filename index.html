@@ -156,8 +156,21 @@
   .duelo .ganhou .av{box-shadow:0 0 12px var(--ouro)}
   .principal{text-align:center; margin:14px 0 -4px; font-family:Anton,Impact,sans-serif; font-style:italic; color:var(--vermelho); letter-spacing:2px}
   
+  /* tooltip dos jogadores (mesmo fundo e borda das listas) */
+  [data-tip]{cursor:help}
+  .tip{position:fixed; z-index:50; max-width:min(300px,86vw); padding:10px 16px 10px 14px; pointer-events:none;
+    background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--vermelho);
+    box-shadow:0 6px 22px rgba(0,0,0,.65); font-size:18px; font-weight:600; line-height:1.15; color:var(--branco);
+    opacity:0; transform:translateY(4px); transition:opacity .15s, transform .15s}
+  .tip.on{opacity:1; transform:none}
+
   footer{text-align:center; padding:50px 16px 34px; color:var(--cinza); font-size:15px}
-  footer strong{display:block; font-family:Anton,Impact,sans-serif; font-style:italic; color:var(--ouro); font-size:18px; letter-spacing:2px; margin-bottom:4px; font-weight:400}
+  footer strong{display:block; font-family:Anton,Impact,sans-serif; font-style:italic; font-size:clamp(26px,8vw,36px);
+    letter-spacing:2px; line-height:1.1; margin-bottom:4px; font-weight:400; text-transform:uppercase}
+  footer .f-azul{color:#1f7bff}
+  footer .f-branco{color:var(--branco)}
+  footer .f-vermelho{color:var(--vermelho)}
+  footer .f-frase{display:block; margin-top:14px}
 
   @media (max-width:420px){
     .duelo-in{padding:8px 20px; gap:6px}
@@ -221,8 +234,10 @@
 
 <!-- ============ SEÇÃO 6 · RODAPÉ ============ -->
 <footer>
-  <strong>REAL SANTA CLARA</strong>
-  Várzea é no Santa! Respeito, amizade e futebol.
+  <strong class="f-azul">Real Santa Clara</strong>
+  <strong class="f-branco">Torcida Los 13</strong>
+  <strong class="f-vermelho">Equipe Tempo Ruim</strong>
+  <span class="f-frase">Várzea é no Santa! Respeito, amizade e futebol.</span>
 </footer>
 
 <script src="data.js"></script>
@@ -233,9 +248,11 @@
   const iniciais = n => n.split(/\s+/).filter(p => p.length > 2 || /^[A-Z]{2,}$/.test(p))
                          .slice(0, 2).map(p => p[0]).join('').toUpperCase() || n.slice(0, 2).toUpperCase();
 
+  const tip = id => jog(id).frase ? ` data-tip="${esc(jog(id).frase)}"` : '';
+
   function avatar(id) {
     const j = jog(id), foto = j.foto || `fotos/${id}.jpg`;
-    return `<span class="av"><img src="${esc(foto)}" alt=""
+    return `<span class="av"${tip(id)}><img src="${esc(foto)}" alt=""
               onerror="this.replaceWith(document.createTextNode('${esc(iniciais(j.nome))}'))"></span>`;
   }
 
@@ -247,9 +264,9 @@
     };
     const [ca, ta] = status(d.a), [cb, tb] = status(d.b);
     return `<div class="duelo"><div class="duelo-in">
-      <div class="lado a ${ca}">${avatar(d.a)}<div><span class="nm">${esc(jog(d.a).nome)}</span>${ta}</div></div>
+      <div class="lado a ${ca}">${avatar(d.a)}<div><span class="nm"${tip(d.a)}>${esc(jog(d.a).nome)}</span>${ta}</div></div>
       <span class="vs">VS</span>
-      <div class="lado b ${cb}">${avatar(d.b)}<div><span class="nm">${esc(jog(d.b).nome)}</span>${tb}</div></div>
+      <div class="lado b ${cb}">${avatar(d.b)}<div><span class="nm"${tip(d.b)}>${esc(jog(d.b).nome)}</span>${tb}</div></div>
     </div></div>`;
   }
 
@@ -291,7 +308,7 @@
     const jogos = s.v + s.d, apr = jogos ? ' · ' + Math.round(s.v * 100 / jogos) + '% aprov.' : '';
     return `<li>
       <span class="pos">${jogos ? (i + 1) + 'º' : '–'}</span>${avatar(s.id)}
-      <div class="info"><div class="nm">${esc(jog(s.id).nome)}</div>
+      <div class="info"><div class="nm"${tip(s.id)}>${esc(jog(s.id).nome)}</div>
         <div class="sub">${s.ed.size} ${s.ed.size > 1 ? 'edições' : 'edição'}${apr}</div></div>
       <div class="placar"><b class="v">${s.v}<small>VIT</small></b><b class="d">${s.d}<small>DER</small></b></div>
     </li>`;
@@ -313,6 +330,35 @@
   $('chips').innerHTML = edicoes.map((ed, i) => `<button type="button">${esc(ed.titulo)}</button>`).join('');
   $('chips').querySelectorAll('button').forEach((b, i) => b.onclick = () => mostrarEdicao(i));
   mostrarEdicao(0);
+
+  /* tooltip: aparece 2 s depois de parar o mouse sobre nome ou foto */
+  const caixaTip = document.createElement('div');
+  caixaTip.className = 'tip';
+  caixaTip.setAttribute('role', 'tooltip');
+  document.body.appendChild(caixaTip);
+  let alvoTip = null, timerTip = null;
+
+  function esconderTip() {
+    clearTimeout(timerTip); alvoTip = null;
+    caixaTip.classList.remove('on');
+  }
+  function mostrarTip(el) {
+    caixaTip.textContent = el.dataset.tip;
+    const r = el.getBoundingClientRect(), t = caixaTip.getBoundingClientRect();
+    const x = Math.min(Math.max(8, r.left + r.width / 2 - t.width / 2), innerWidth - t.width - 8);
+    const y = r.top - t.height - 10 >= 8 ? r.top - t.height - 10 : r.bottom + 10;
+    caixaTip.style.left = x + 'px'; caixaTip.style.top = y + 'px';
+    caixaTip.classList.add('on');
+  }
+  document.addEventListener('mouseover', e => {
+    const el = e.target.closest('[data-tip]');
+    if (el === alvoTip) return;
+    esconderTip();
+    if (!el) return;
+    alvoTip = el;
+    timerTip = setTimeout(() => mostrarTip(el), 2000);
+  });
+  addEventListener('scroll', esconderTip, { passive: true });
 </script>
 </body>
 </html>

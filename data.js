@@ -8,21 +8,23 @@
    - A chave (ex.: mariojr) é o "id" usado nos duelos.
    - A foto fica em fotos/<id>.jpg (ex.: fotos/mariojr.jpg).
      Sem foto, o site mostra as iniciais no lugar.
-   - categoria: "veterano" ou "esporte" (aba do ranking).  */
+   - categoria: "veterano" ou "esporte" (aba do ranking).
+   - frase (opcional): texto do tooltip ao passar o mouse por 2 s
+     sobre o nome ou a foto.                                  */
 const jogadores = {
-  xavola:   { nome: "Xavola",              categoria: "esporte" },
+  xavola:   { nome: "Xavola",              categoria: "esporte", frase: "Das galáxias para Mossoró! De Mossoró para o Mundo!" },
   sato:     { nome: "Japa Sato (Hideki)",  categoria: "esporte" },
   binho:    { nome: "Edvaldo (Binho)",     categoria: "veterano" },
   leozinho: { nome: "Leozinho",            categoria: "esporte" },
-  paizao:   { nome: "Paizão do Rachão",    categoria: "veterano" },
+  paizao:   { nome: "Paizão do Rachão",    categoria: "veterano", frase: "Rei da Cavada - Tempo Ruim o Tempo Todo" },
   tiga:     { nome: "TiGa (9 Verdadeiro)", categoria: "veterano" },
   mariojr:  { nome: "Mário Jr",            categoria: "esporte" },
   nigeria:  { nome: "Flávio (Nigéria)",    categoria: "esporte" },
   ivan:     { nome: "Ivan",                categoria: "veterano" },
   bruninho: { nome: "Bruninho",            categoria: "esporte" },
-  jony:     { nome: "Jhonny",              categoria: "veterano" },
+  jony:     { nome: "Jhonny",              categoria: "veterano", frase: "Que iiiissooo! Ciclovia o Tempo Todo" },
   caio:     { nome: "Caio CJ",             categoria: "esporte" },
-  luan:     { nome: "Luan",                categoria: "esporte" },
+  luan:     { nome: "Luan",                categoria: "esporte", frase: "Ao Infinito e Além!" },
   luizinho: { nome: "Luizinho",            categoria: "esporte" },
   jo:       { nome: "Jó",                  categoria: "veterano" },
   nico:     { nome: "Nico",                categoria: "esporte" },
