@@ -1,0 +1,270 @@
+:root{
+  --preto:#0a0505; --painel:#141010; --painel2:#1d1414;
+  --ouro:#f7c600; --ouro-claro:#ffe36b; --ouro-escuro:#a86f00;
+  --vermelho:#d1162b; --vermelho-escuro:#7a0612; --branco:#fff;
+  --cinza:#a89c9c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--branco); min-height:100vh;
+  font-family:'Barlow Condensed','Arial Narrow',sans-serif;
+  background:
+    radial-gradient(60vw 40vh at 0% 0%, rgba(209,22,43,.38), transparent 70%),
+    radial-gradient(60vw 40vh at 100% 0%, rgba(209,22,43,.38), transparent 70%),
+    radial-gradient(80vw 50vh at 50% 110%, rgba(209,22,43,.22), transparent 70%),
+    var(--preto);
+  background-attachment:fixed;
+}
+/* refletores nos cantos, como nos flyers */
+body::before,body::after{
+  content:""; position:fixed; top:-60px; width:220px; height:220px; pointer-events:none; z-index:0;
+  background:radial-gradient(circle, rgba(255,240,200,.55) 0%, rgba(255,200,90,.18) 35%, transparent 70%);
+}
+body::before{left:-70px} body::after{right:-70px}
+main,header,footer{position:relative; z-index:1}
+.wrap{max-width:720px; margin:0 auto; padding:0 16px}
+
+/* ---------- tipografia de evento ---------- */
+.titulo-ouro{
+  font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase;
+  letter-spacing:1px; line-height:.95; margin:0; padding-top:.2em; /* dá espaço ao til e ao acento, que o fundo recortado cortava */
+  background:linear-gradient(180deg,#fff6c4 0%,var(--ouro-claro) 25%,var(--ouro) 50%,var(--ouro-escuro) 56%,var(--ouro) 80%,var(--ouro-claro) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 3px 0 var(--vermelho-escuro)) drop-shadow(0 0 14px rgba(255,180,0,.35));
+}
+.pincel{ /* faixa de pincel */
+  display:inline-block; font-family:Anton,Impact,sans-serif; text-transform:uppercase;
+  padding:.25em .9em; letter-spacing:1px;
+  clip-path:polygon(2% 12%,10% 0,35% 6%,60% 0,88% 5%,100% 0,97% 40%,100% 78%,92% 100%,62% 94%,38% 100%,12% 94%,0 100%,3% 60%);
+}
+.pincel.vermelho{background:var(--vermelho); color:var(--branco); box-shadow:0 0 30px rgba(209,22,43,.6)}
+.pincel.ouro{background:linear-gradient(180deg,var(--ouro-claro),var(--ouro)); color:#111}
+
+/* ---------- topo ---------- */
+header{text-align:center; padding:36px 0 8px}
+.logo{width:min(360px,80vw); height:auto; display:block; margin:0 auto;
+      filter:drop-shadow(0 6px 18px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(209,22,43,.35))}
+.lema{margin-top:10px; font-weight:800; font-style:italic; font-size:18px; letter-spacing:4px; color:var(--ouro)}
+.lema span{color:var(--vermelho)}
+
+/* ---------- próximo X1 ---------- */
+.proximo{text-align:center; margin:34px 0 10px}
+.proximo .titulo-ouro{font-size:clamp(52px,14vw,92px)}
+.risco{height:8px; width:min(320px,70%); margin:6px auto 18px; background:var(--vermelho);
+       clip-path:polygon(0 40%,100% 0,96% 100%,4% 80%); box-shadow:0 0 18px var(--vermelho)}
+.proximo .mes{font-size:clamp(34px,9vw,54px); transform:rotate(-2deg)}
+
+.faixa-titulo{display:flex; align-items:center; gap:10px; margin:30px 0 14px}
+.faixa-titulo::before,.faixa-titulo::after{content:""; flex:1; height:3px;
+  background:linear-gradient(90deg,transparent,var(--vermelho)); box-shadow:0 0 10px var(--vermelho)}
+.faixa-titulo::after{background:linear-gradient(270deg,transparent,var(--vermelho))}
+.faixa-titulo h2{margin:0; font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase;
+  font-size:clamp(22px,6vw,32px); color:#111; padding:6px 22px;
+  background:linear-gradient(180deg,var(--ouro-claro),var(--ouro) 60%,#d99a00);
+  clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%)}
+
+/* linha de duelo estilo flyer */
+.duelo{position:relative; margin:10px 0; padding:2px; background:var(--vermelho);
+  clip-path:polygon(16px 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,16px 100%,0 50%);
+  filter:drop-shadow(0 0 8px rgba(209,22,43,.55))}
+.duelo-in{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px;
+  min-height:64px; padding:8px 26px;
+  background:linear-gradient(180deg,#221818,#0e0a0a);
+  clip-path:polygon(15px 0,calc(100% - 15px) 0,100% 50%,calc(100% - 15px) 100%,15px 100%,0 50%)}
+.lado{display:flex; align-items:center; gap:10px; min-width:0}
+.lado.b{flex-direction:row-reverse; text-align:right}
+.lado .nm{font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase;
+  font-size:clamp(17px,4.6vw,24px); line-height:1; letter-spacing:.5px; overflow-wrap:break-word}
+.vs{font-family:Anton,Impact,sans-serif; font-style:italic; font-size:20px; color:#111;
+  background:var(--ouro); padding:6px 12px; transform:skewX(-8deg);
+  clip-path:polygon(4% 18%,30% 0,70% 8%,100% 0,94% 50%,100% 92%,62% 100%,30% 90%,0 100%,6% 55%);
+  box-shadow:0 0 18px rgba(247,198,0,.5)}
+.local{margin:16px 0 0; text-align:center}
+.local .pincel{font-size:clamp(18px,5vw,26px)}
+.local .endereco{display:block; margin-top:10px; font-weight:800; font-size:clamp(17px,4.6vw,22px); letter-spacing:1px;
+  color:var(--branco); text-transform:uppercase}
+.mapa{margin:16px 0 0; padding:2px; background:var(--vermelho); filter:drop-shadow(0 0 8px rgba(209,22,43,.55))}
+.mapa[hidden]{display:none}
+.mapa iframe{display:block; width:100%; height:260px; border:0; background:var(--painel)}
+.rota{margin:18px 0 0; text-align:center; display:flex; flex-wrap:wrap; justify-content:center; gap:12px}
+.rota a{font-size:clamp(18px,5vw,24px); text-decoration:none; cursor:pointer}
+.rota a[hidden]{display:none}
+#secao-bolao[hidden]{display:none}
+.bolao-valor{text-align:center; margin:0; font-size:clamp(18px,5vw,24px); font-weight:800; color:var(--cinza)}
+.bolao-valor b{font-family:Anton,Impact,sans-serif; font-style:italic; font-weight:400; color:var(--ouro); letter-spacing:1px}
+.bolao-pix{text-align:center; margin:6px 0; font-size:clamp(17px,4.6vw,21px); font-weight:800}
+.bolao-pix[hidden]{display:none}
+.bolao-sub{margin:22px 0 8px; text-align:center; font-family:Anton,Impact,sans-serif; font-style:italic; font-weight:400;
+  text-transform:uppercase; font-size:clamp(20px,5.4vw,26px); color:var(--ouro); letter-spacing:1px}
+.pontos{list-style:none; margin:0; padding:0}
+.pontos li{display:flex; align-items:center; gap:12px; margin:8px 0; padding:10px 14px 10px 0;
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--vermelho);
+  font-weight:600; font-size:clamp(16px,4.4vw,19px); line-height:1.1}
+.pontos .pts{flex:none; width:54px; text-align:center; font-family:Anton,Impact,sans-serif; font-style:italic;
+  font-size:26px; color:var(--cinza)}
+.pontos li:nth-child(-n+4) .pts{color:var(--ouro)}
+.aviso.regra{color:var(--branco); font-weight:800; font-size:clamp(17px,4.6vw,21px); letter-spacing:.5px; margin:0 0 4px}
+.aviso.regra[hidden]{display:none}
+.campeao{margin:4px 0 10px; font-weight:800; font-size:clamp(16px,4.4vw,20px); letter-spacing:1.5px; text-transform:uppercase; color:var(--cinza)}
+.campeao b{font-family:Anton,Impact,sans-serif; font-style:italic; font-weight:400; color:var(--ouro); letter-spacing:1px}
+.cinturao{margin-top:18px; text-align:center}
+.cinturao-img{display:block; height:136px; width:auto; max-width:100%; margin:0 auto; /* dobro da altura da linha do confronto */
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent);
+    -webkit-mask-composite:source-in; mask-composite:intersect;
+          mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent);
+  filter:drop-shadow(0 0 14px rgba(247,198,0,.35))}
+
+/* avatar */
+.av{flex:none; width:44px; height:44px; border-radius:50%; overflow:hidden; display:grid; place-items:center;
+  border:2px solid var(--ouro); background:radial-gradient(circle at 30% 30%,#3a2020,#140c0c);
+  font-family:Anton,Impact,sans-serif; color:var(--ouro); font-size:16px}
+.av img{width:100%; height:100%; object-fit:cover}
+
+/* ---------- seções ---------- */
+main > section{margin-top:44px}
+
+/* abas do ranking (Veterano em destaque, Esporte depois) */
+.abas{display:grid; grid-template-columns:1.3fr 1fr; gap:10px; margin:0 0 18px}
+.abas button{font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase; font-size:22px;
+  letter-spacing:1px; padding:12px 8px; cursor:pointer; color:var(--branco); background:var(--painel2);
+  border:0; transform:skewX(-10deg); box-shadow:inset 0 0 0 2px var(--vermelho)}
+.abas button span{display:inline-block; transform:skewX(10deg)}
+.abas button[aria-selected="true"]{background:linear-gradient(180deg,var(--ouro-claro),var(--ouro));
+  color:#111; box-shadow:0 0 22px rgba(247,198,0,.45)}
+
+.aviso{text-align:center; color:var(--cinza); font-size:16px; margin:0 0 12px}
+
+/* ranking */
+.rank{list-style:none; margin:0; padding:0; counter-reset:pos}
+.rank li{display:flex; align-items:center; gap:12px; margin:8px 0; padding:10px 14px 10px 0;
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--vermelho)}
+.rank li:nth-child(1){border-left-color:var(--ouro); box-shadow:0 0 20px rgba(247,198,0,.18)}
+.pos{width:44px; text-align:center; font-family:Anton,Impact,sans-serif; font-style:italic; font-size:26px; color:var(--cinza)}
+.rank li:nth-child(-n+3) .pos{color:var(--ouro)}
+.rank .av{width:56px; height:56px; font-size:20px}
+.info{flex:1; min-width:0}
+.info .nm{font-family:Anton,Impact,sans-serif; text-transform:uppercase; font-size:21px; line-height:1.05; letter-spacing:.5px}
+.info .sub{color:var(--cinza); font-size:15px; font-weight:600}
+.placar{display:flex; gap:4px}
+.placar b{font-family:Anton,Impact,sans-serif; font-weight:400; font-size:19px; min-width:44px; text-align:center; padding:5px 6px}
+.placar .v{background:var(--ouro); color:#111}
+.placar .d{background:var(--vermelho)}
+.placar small{display:block; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:10px; letter-spacing:1px; opacity:.8; margin-top:-2px}
+
+/* edições */
+.chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:6px}
+.chips button{flex:none; font-family:Anton,Impact,sans-serif; text-transform:uppercase; font-size:17px; padding:8px 16px;
+  background:transparent; color:var(--branco); border:2px solid var(--ouro); cursor:pointer; transform:skewX(-10deg)}
+.chips button[aria-pressed="true"]{background:var(--ouro); color:#111}
+.ed-info{text-align:center; color:var(--cinza); font-weight:600; font-size:16px; margin:8px 0 6px}
+.duelo .tag{display:block; font-family:'Barlow Condensed',sans-serif; font-style:normal; font-weight:800; font-size:11px;
+  letter-spacing:1.5px; margin-top:3px; color:var(--ouro)}
+.duelo .perdeu{opacity:.45}
+.duelo .perdeu .av{border-color:#555}
+.duelo .ganhou .av{box-shadow:0 0 12px var(--ouro)}
+.principal{text-align:center; margin:14px 0 -4px; font-family:Anton,Impact,sans-serif; font-style:italic; color:var(--vermelho); letter-spacing:2px}
+
+/* tooltip dos jogadores (mesmo fundo e borda das listas) */
+[data-tip]{cursor:help}
+.tip{position:fixed; z-index:50; max-width:min(300px,86vw); padding:10px 16px 10px 14px; pointer-events:none;
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--vermelho);
+  box-shadow:0 6px 22px rgba(0,0,0,.65); font-size:18px; font-weight:600; line-height:1.15; color:var(--branco);
+  opacity:0; transform:translateY(4px); transition:opacity .15s, transform .15s}
+.tip.on{opacity:1; transform:none}
+
+footer{text-align:center; padding:50px 16px 34px; color:var(--cinza); font-size:15px}
+footer strong{display:block; font-family:Anton,Impact,sans-serif; font-style:italic; font-size:clamp(26px,8vw,36px);
+  letter-spacing:2px; line-height:1.1; margin-bottom:4px; font-weight:400; text-transform:uppercase}
+footer .f-azul{color:#1f7bff}
+footer .f-branco{color:var(--branco)}
+footer .f-vermelho{color:var(--vermelho)}
+footer .f-frase{display:block; margin-top:14px}
+
+@media (max-width:420px){
+  .duelo-in{padding:8px 20px; gap:6px}
+  .av{width:36px; height:36px; font-size:13px}
+  .vs{font-size:16px; padding:5px 9px}
+}
+
+/* ---------- banner fixo do bolão (lateral direita) ---------- */
+.bolao-faixa{position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:30;
+  writing-mode:vertical-rl; text-orientation:mixed; text-decoration:none; text-transform:uppercase;
+  font-family:Anton,Impact,sans-serif; font-style:italic; letter-spacing:2px; font-size:clamp(17px,4.6vw,22px);
+  color:#111; padding:18px 11px; border-radius:12px 0 0 12px;
+  background:linear-gradient(90deg,var(--ouro-claro),var(--ouro) 60%,#d99a00);
+  box-shadow:-3px 0 0 var(--vermelho), -6px 0 22px rgba(247,198,0,.45);
+  animation:pulsa 2.4s ease-in-out infinite}
+.bolao-faixa:hover{filter:brightness(1.08)}
+.bolao-faixa[hidden]{display:none}
+@keyframes pulsa{0%,100%{box-shadow:-3px 0 0 var(--vermelho), -6px 0 18px rgba(247,198,0,.35)}
+  50%{box-shadow:-3px 0 0 var(--vermelho), -8px 0 30px rgba(247,198,0,.75)}}
+@media (prefers-reduced-motion:reduce){.bolao-faixa{animation:none}}
+
+/* ---------- página do bolão ---------- */
+.voltar{display:inline-block; margin:14px 0 0; color:var(--ouro); font-weight:800; letter-spacing:1px; text-decoration:none; font-size:18px}
+.voltar:hover{text-decoration:underline}
+.logo-link{display:block}
+.campo{margin:12px 0}
+.campo label{display:block; margin-bottom:4px; font-weight:800; letter-spacing:1px; text-transform:uppercase; font-size:15px; color:var(--cinza)}
+.campo input{width:100%; padding:12px 14px; font:600 20px 'Barlow Condensed',sans-serif; color:var(--branco);
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border:0; border-left:5px solid var(--vermelho); outline:0}
+.campo input:focus{box-shadow:0 0 0 2px var(--ouro)}
+.palpite{margin:10px 0}
+.gols{display:flex; align-items:center; gap:6px}
+.gols input{width:54px; padding:8px 4px; text-align:center; font:400 24px Anton,Impact,sans-serif; color:var(--ouro);
+  background:#0a0505; border:2px solid var(--ouro); border-radius:6px; outline:0; -moz-appearance:textfield}
+.gols input::-webkit-outer-spin-button,.gols input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+.gols input:focus{box-shadow:0 0 10px rgba(247,198,0,.6)}
+.gols .x{font-family:Anton,Impact,sans-serif; color:var(--vermelho); font-size:22px}
+.penaltis{margin:2px 0 10px; padding:10px 14px; text-align:center; font-weight:800; letter-spacing:.5px;
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--ouro)}
+.penaltis[hidden]{display:none}
+.penaltis label{display:inline-flex; align-items:center; gap:6px; margin:6px 12px 0; cursor:pointer;
+  font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase; font-size:18px}
+.penaltis input{accent-color:var(--ouro); width:18px; height:18px}
+.btn-enviar{display:block; margin:22px auto 0; border:0; cursor:pointer; font-size:clamp(20px,5.4vw,26px)}
+.btn-enviar:disabled{filter:grayscale(1); opacity:.5; cursor:not-allowed}
+.msg{margin:14px 0 0; padding:12px 14px; text-align:center; font-weight:800; font-size:18px;
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--ouro)}
+.msg.erro{border-left-color:var(--vermelho); color:#ff8a96}
+.msg[hidden]{display:none}
+.rank li .pts-total{font-family:Anton,Impact,sans-serif; font-size:26px; color:var(--ouro); min-width:52px; text-align:right}
+.rank li .pts-total small{display:block; font:800 10px 'Barlow Condensed',sans-serif; letter-spacing:1px; color:var(--cinza)}
+.premio{text-align:center; margin:8px 0 0; font-weight:800; font-size:clamp(18px,5vw,24px); color:var(--cinza)}
+.premio b{font-family:Anton,Impact,sans-serif; font-style:italic; font-weight:400; color:var(--ouro); letter-spacing:1px}
+
+/* placares do bolão em telas estreitas: sem foto, para os nomes caberem */
+@media (max-width:480px){
+  .palpite .av{display:none}
+  .palpite .duelo-in{padding:8px 16px; gap:4px}
+  .gols input{width:46px; font-size:22px}
+  .palpite .lado .nm{font-size:clamp(15px,4.4vw,19px)}
+}
+
+/* ---------- gerenciamento do bolão (organizador) ---------- */
+#secao-acesso[hidden],#secao-lista[hidden]{display:none}
+.resumo{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:0 0 14px}
+.resumo div{padding:10px 6px; text-align:center; background:linear-gradient(90deg,var(--painel2),var(--painel)); border-top:3px solid var(--vermelho)}
+.resumo b{display:block; font-family:Anton,Impact,sans-serif; font-weight:400; font-size:clamp(18px,5vw,24px); color:var(--ouro)}
+.resumo small{font-weight:800; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--cinza)}
+.ger-filtros{display:flex; gap:8px; margin:0 0 4px}
+.ger-filtros input,.ger-filtros select{padding:10px 12px; font:600 18px 'Barlow Condensed',sans-serif; color:var(--branco);
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border:0; border-left:5px solid var(--vermelho); outline:0}
+.ger-filtros input{flex:1; min-width:0}
+.ger-lista{list-style:none; margin:14px 0 0; padding:0}
+.ger-item{display:flex; align-items:flex-start; gap:12px; margin:8px 0; padding:12px 14px 12px 0;
+  background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--vermelho)}
+.ger-item.pago{border-left-color:var(--ouro); box-shadow:0 0 16px rgba(247,198,0,.15)}
+.ger-pago{flex:none; width:74px; display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer;
+  font-family:Anton,Impact,sans-serif; font-style:italic; font-size:15px; color:var(--cinza)}
+.ger-item.pago .ger-pago{color:var(--ouro)}
+.ger-pago input{width:30px; height:30px; accent-color:var(--ouro); cursor:pointer}
+.ger-item .info{flex:1; min-width:0}
+.ger-item .sub a{color:var(--ouro)}
+.ger-item details{margin-top:6px}
+.ger-item summary{cursor:pointer; font-weight:800; font-size:15px; letter-spacing:.5px; color:var(--ouro)}
+.ger-palpites{margin:6px 0 0; padding-left:18px; font-weight:600; font-size:16px; color:var(--branco)}
+.ger-palpites b{color:var(--ouro)}
+.ger-vazio{padding:14px; text-align:center; color:var(--cinza); font-weight:600}
+@media (max-width:420px){ .resumo{grid-template-columns:repeat(2,1fr)} }

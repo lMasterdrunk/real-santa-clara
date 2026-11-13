@@ -22,182 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,600;0,800;1,800;1,900&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --preto:#0a0505; --painel:#141010; --painel2:#1d1414;
-    --ouro:#f7c600; --ouro-claro:#ffe36b; --ouro-escuro:#a86f00;
-    --vermelho:#d1162b; --vermelho-escuro:#7a0612; --branco:#fff;
-    --cinza:#a89c9c;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0; color:var(--branco); min-height:100vh;
-    font-family:'Barlow Condensed','Arial Narrow',sans-serif;
-    background:
-      radial-gradient(60vw 40vh at 0% 0%, rgba(209,22,43,.38), transparent 70%),
-      radial-gradient(60vw 40vh at 100% 0%, rgba(209,22,43,.38), transparent 70%),
-      radial-gradient(80vw 50vh at 50% 110%, rgba(209,22,43,.22), transparent 70%),
-      var(--preto);
-    background-attachment:fixed;
-  }
-  /* refletores nos cantos, como nos flyers */
-  body::before,body::after{
-    content:""; position:fixed; top:-60px; width:220px; height:220px; pointer-events:none; z-index:0;
-    background:radial-gradient(circle, rgba(255,240,200,.55) 0%, rgba(255,200,90,.18) 35%, transparent 70%);
-  }
-  body::before{left:-70px} body::after{right:-70px}
-  main,header,footer{position:relative; z-index:1}
-  .wrap{max-width:720px; margin:0 auto; padding:0 16px}
-
-  /* ---------- tipografia de evento ---------- */
-  .titulo-ouro{
-    font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase;
-    letter-spacing:1px; line-height:.95; margin:0;
-    background:linear-gradient(180deg,#fff6c4 0%,var(--ouro-claro) 25%,var(--ouro) 50%,var(--ouro-escuro) 56%,var(--ouro) 80%,var(--ouro-claro) 100%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    filter:drop-shadow(0 3px 0 var(--vermelho-escuro)) drop-shadow(0 0 14px rgba(255,180,0,.35));
-  }
-  .pincel{ /* faixa de pincel */
-    display:inline-block; font-family:Anton,Impact,sans-serif; text-transform:uppercase;
-    padding:.25em .9em; letter-spacing:1px;
-    clip-path:polygon(2% 12%,10% 0,35% 6%,60% 0,88% 5%,100% 0,97% 40%,100% 78%,92% 100%,62% 94%,38% 100%,12% 94%,0 100%,3% 60%);
-  }
-  .pincel.vermelho{background:var(--vermelho); color:var(--branco); box-shadow:0 0 30px rgba(209,22,43,.6)}
-  .pincel.ouro{background:linear-gradient(180deg,var(--ouro-claro),var(--ouro)); color:#111}
-
-  /* ---------- topo ---------- */
-  header{text-align:center; padding:36px 0 8px}
-  .logo{width:min(360px,80vw); height:auto; display:block; margin:0 auto;
-        filter:drop-shadow(0 6px 18px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(209,22,43,.35))}
-  .lema{margin-top:10px; font-weight:800; font-style:italic; font-size:18px; letter-spacing:4px; color:var(--ouro)}
-  .lema span{color:var(--vermelho)}
-
-  /* ---------- próximo X1 ---------- */
-  .proximo{text-align:center; margin:34px 0 10px}
-  .proximo .titulo-ouro{font-size:clamp(52px,14vw,92px)}
-  .risco{height:8px; width:min(320px,70%); margin:6px auto 18px; background:var(--vermelho);
-         clip-path:polygon(0 40%,100% 0,96% 100%,4% 80%); box-shadow:0 0 18px var(--vermelho)}
-  .proximo .mes{font-size:clamp(34px,9vw,54px); transform:rotate(-2deg)}
-  .proximo .quando{display:block; width:max-content; margin:8px auto 0; font-size:18px; transform:rotate(-2deg)}
-
-  .faixa-titulo{display:flex; align-items:center; gap:10px; margin:30px 0 14px}
-  .faixa-titulo::before,.faixa-titulo::after{content:""; flex:1; height:3px;
-    background:linear-gradient(90deg,transparent,var(--vermelho)); box-shadow:0 0 10px var(--vermelho)}
-  .faixa-titulo::after{background:linear-gradient(270deg,transparent,var(--vermelho))}
-  .faixa-titulo h2{margin:0; font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase;
-    font-size:clamp(22px,6vw,32px); color:#111; padding:6px 22px;
-    background:linear-gradient(180deg,var(--ouro-claro),var(--ouro) 60%,#d99a00);
-    clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%)}
-
-  /* linha de duelo estilo flyer */
-  .duelo{position:relative; margin:10px 0; padding:2px; background:var(--vermelho);
-    clip-path:polygon(16px 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,16px 100%,0 50%);
-    filter:drop-shadow(0 0 8px rgba(209,22,43,.55))}
-  .duelo-in{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px;
-    min-height:64px; padding:8px 26px;
-    background:linear-gradient(180deg,#221818,#0e0a0a);
-    clip-path:polygon(15px 0,calc(100% - 15px) 0,100% 50%,calc(100% - 15px) 100%,15px 100%,0 50%)}
-  .lado{display:flex; align-items:center; gap:10px; min-width:0}
-  .lado.b{flex-direction:row-reverse; text-align:right}
-  .lado .nm{font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase;
-    font-size:clamp(17px,4.6vw,24px); line-height:1; letter-spacing:.5px; overflow-wrap:break-word}
-  .vs{font-family:Anton,Impact,sans-serif; font-style:italic; font-size:20px; color:#111;
-    background:var(--ouro); padding:6px 12px; transform:skewX(-8deg);
-    clip-path:polygon(4% 18%,30% 0,70% 8%,100% 0,94% 50%,100% 92%,62% 100%,30% 90%,0 100%,6% 55%);
-    box-shadow:0 0 18px rgba(247,198,0,.5)}
-  .local{margin:16px 0 0; text-align:center}
-  .local .pincel{font-size:clamp(18px,5vw,26px)}
-  .local .endereco{display:block; margin-top:10px; font-weight:800; font-size:clamp(17px,4.6vw,22px); letter-spacing:1px;
-    color:var(--branco); text-transform:uppercase}
-  .mapa{margin:16px 0 0; padding:2px; background:var(--vermelho); filter:drop-shadow(0 0 8px rgba(209,22,43,.55))}
-  .mapa[hidden]{display:none}
-  .mapa iframe{display:block; width:100%; height:260px; border:0; background:var(--painel)}
-  .rota{margin:18px 0 0; text-align:center; display:flex; flex-wrap:wrap; justify-content:center; gap:12px}
-  .rota a{font-size:clamp(18px,5vw,24px); text-decoration:none; cursor:pointer}
-  .rota a[hidden]{display:none}
-  .aviso.regra{color:var(--branco); font-weight:800; font-size:clamp(17px,4.6vw,21px); letter-spacing:.5px; margin:0 0 4px}
-  .aviso.regra[hidden]{display:none}
-  .campeao{margin:4px 0 10px; font-weight:800; font-size:clamp(16px,4.4vw,20px); letter-spacing:1.5px; text-transform:uppercase; color:var(--cinza)}
-  .campeao b{font-family:Anton,Impact,sans-serif; font-style:italic; font-weight:400; color:var(--ouro); letter-spacing:1px}
-  .cinturao{margin-top:18px; text-align:center}
-  .cinturao-img{display:block; height:136px; width:auto; max-width:100%; margin:0 auto; /* dobro da altura da linha do confronto */
-    -webkit-mask-image:radial-gradient(ellipse 75% 85% at 50% 50%,#000 78%,transparent 100%);
-            mask-image:radial-gradient(ellipse 75% 85% at 50% 50%,#000 78%,transparent 100%);
-    filter:drop-shadow(0 0 14px rgba(247,198,0,.35))}
-
-  /* avatar */
-  .av{flex:none; width:44px; height:44px; border-radius:50%; overflow:hidden; display:grid; place-items:center;
-    border:2px solid var(--ouro); background:radial-gradient(circle at 30% 30%,#3a2020,#140c0c);
-    font-family:Anton,Impact,sans-serif; color:var(--ouro); font-size:16px}
-  .av img{width:100%; height:100%; object-fit:cover}
-
-  /* ---------- seções ---------- */
-  main > section{margin-top:44px}
-
-  /* abas do ranking (Veterano em destaque, Esporte depois) */
-  .abas{display:grid; grid-template-columns:1.3fr 1fr; gap:10px; margin:0 0 18px}
-  .abas button{font-family:Anton,Impact,sans-serif; font-style:italic; text-transform:uppercase; font-size:22px;
-    letter-spacing:1px; padding:12px 8px; cursor:pointer; color:var(--branco); background:var(--painel2);
-    border:0; transform:skewX(-10deg); box-shadow:inset 0 0 0 2px var(--vermelho)}
-  .abas button span{display:inline-block; transform:skewX(10deg)}
-  .abas button[aria-selected="true"]{background:linear-gradient(180deg,var(--ouro-claro),var(--ouro));
-    color:#111; box-shadow:0 0 22px rgba(247,198,0,.45)}
-
-  .aviso{text-align:center; color:var(--cinza); font-size:16px; margin:0 0 12px}
-
-  /* ranking */
-  .rank{list-style:none; margin:0; padding:0; counter-reset:pos}
-  .rank li{display:flex; align-items:center; gap:12px; margin:8px 0; padding:10px 14px 10px 0;
-    background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--vermelho)}
-  .rank li:nth-child(1){border-left-color:var(--ouro); box-shadow:0 0 20px rgba(247,198,0,.18)}
-  .pos{width:44px; text-align:center; font-family:Anton,Impact,sans-serif; font-style:italic; font-size:26px; color:var(--cinza)}
-  .rank li:nth-child(-n+3) .pos{color:var(--ouro)}
-  .rank .av{width:56px; height:56px; font-size:20px}
-  .info{flex:1; min-width:0}
-  .info .nm{font-family:Anton,Impact,sans-serif; text-transform:uppercase; font-size:21px; line-height:1.05; letter-spacing:.5px}
-  .info .sub{color:var(--cinza); font-size:15px; font-weight:600}
-  .placar{display:flex; gap:4px}
-  .placar b{font-family:Anton,Impact,sans-serif; font-weight:400; font-size:19px; min-width:44px; text-align:center; padding:5px 6px}
-  .placar .v{background:var(--ouro); color:#111}
-  .placar .d{background:var(--vermelho)}
-  .placar small{display:block; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:10px; letter-spacing:1px; opacity:.8; margin-top:-2px}
-
-  /* edições */
-  .chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:6px}
-  .chips button{flex:none; font-family:Anton,Impact,sans-serif; text-transform:uppercase; font-size:17px; padding:8px 16px;
-    background:transparent; color:var(--branco); border:2px solid var(--ouro); cursor:pointer; transform:skewX(-10deg)}
-  .chips button[aria-pressed="true"]{background:var(--ouro); color:#111}
-  .ed-info{text-align:center; color:var(--cinza); font-weight:600; font-size:16px; margin:8px 0 6px}
-  .duelo .tag{display:block; font-family:'Barlow Condensed',sans-serif; font-style:normal; font-weight:800; font-size:11px;
-    letter-spacing:1.5px; margin-top:3px; color:var(--ouro)}
-  .duelo .perdeu{opacity:.45}
-  .duelo .perdeu .av{border-color:#555}
-  .duelo .ganhou .av{box-shadow:0 0 12px var(--ouro)}
-  .principal{text-align:center; margin:14px 0 -4px; font-family:Anton,Impact,sans-serif; font-style:italic; color:var(--vermelho); letter-spacing:2px}
-  
-  /* tooltip dos jogadores (mesmo fundo e borda das listas) */
-  [data-tip]{cursor:help}
-  .tip{position:fixed; z-index:50; max-width:min(300px,86vw); padding:10px 16px 10px 14px; pointer-events:none;
-    background:linear-gradient(90deg,var(--painel2),var(--painel)); border-left:5px solid var(--vermelho);
-    box-shadow:0 6px 22px rgba(0,0,0,.65); font-size:18px; font-weight:600; line-height:1.15; color:var(--branco);
-    opacity:0; transform:translateY(4px); transition:opacity .15s, transform .15s}
-  .tip.on{opacity:1; transform:none}
-
-  footer{text-align:center; padding:50px 16px 34px; color:var(--cinza); font-size:15px}
-  footer strong{display:block; font-family:Anton,Impact,sans-serif; font-style:italic; font-size:clamp(26px,8vw,36px);
-    letter-spacing:2px; line-height:1.1; margin-bottom:4px; font-weight:400; text-transform:uppercase}
-  footer .f-azul{color:#1f7bff}
-  footer .f-branco{color:var(--branco)}
-  footer .f-vermelho{color:var(--vermelho)}
-  footer .f-frase{display:block; margin-top:14px}
-
-  @media (max-width:420px){
-    .duelo-in{padding:8px 20px; gap:6px}
-    .av{width:36px; height:36px; font-size:13px}
-    .vs{font-size:16px; padding:5px 9px}
-  }
-</style>
+<link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 
@@ -211,7 +36,6 @@
     <h1 class="titulo-ouro">Próximo X1</h1>
     <div class="risco"></div>
     <div class="pincel vermelho mes" id="prox-mes"></div>
-    <span class="pincel ouro quando" id="prox-data"></span>
   </div>
 </header>
 
@@ -240,7 +64,7 @@
     </p>
   </section>
 
-  <!-- ============ SEÇÃO 4 · RANKING DOS PARTICIPANTES ============ -->
+  <!-- ============ SEÇÃO 5 · RANKING DOS PARTICIPANTES ============ -->
   <section id="secao-ranking" aria-labelledby="t-ranking">
     <div class="faixa-titulo"><h2 id="t-ranking">Ranking</h2></div>
     <div class="abas" role="tablist" aria-label="Categoria do ranking">
@@ -251,7 +75,7 @@
     <ol class="rank" id="lista-ranking" role="tabpanel"></ol>
   </section>
 
-  <!-- ============ SEÇÃO 5 · EDIÇÕES ANTERIORES ============ -->
+  <!-- ============ SEÇÃO 6 · EDIÇÕES ANTERIORES ============ -->
   <section id="secao-edicoes" aria-labelledby="t-edicoes">
     <div class="faixa-titulo"><h2 id="t-edicoes">Edições</h2></div>
     <div class="chips" id="chips"></div>
@@ -261,7 +85,7 @@
 
 </main>
 
-<!-- ============ SEÇÃO 6 · RODAPÉ ============ -->
+<!-- ============ SEÇÃO 7 · RODAPÉ ============ -->
 <footer>
   <strong class="f-azul">Real Santa Clara</strong>
   <strong class="f-branco">Torcida Los 13</strong>
@@ -269,22 +93,14 @@
   <span class="f-frase">Várzea é no Santa! Respeito, amizade e futebol.</span>
 </footer>
 
+<!-- Banner fixo à direita: leva para a página do bolão (aparece quando bolao.ativo = true no data.js) -->
+<a class="bolao-faixa" id="bolao-faixa" href="bolao.html" hidden>
+  <span>🏆 Bolão do X1</span>
+</a>
+
 <script src="data.js"></script>
+<script src="comum.js"></script>
 <script>
-  const $ = id => document.getElementById(id);
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const jog = id => jogadores[id] || { nome: id };
-  const iniciais = n => n.split(/\s+/).filter(p => p.length > 2 || /^[A-Z]{2,}$/.test(p))
-                         .slice(0, 2).map(p => p[0]).join('').toUpperCase() || n.slice(0, 2).toUpperCase();
-
-  const tip = id => jog(id).frase ? ` data-tip="${esc(jog(id).frase)}"` : '';
-
-  function avatar(id) {
-    const j = jog(id), foto = j.foto || `fotos/${id}.jpg`;
-    return `<span class="av"${tip(id)}><img src="${esc(foto)}" alt=""
-              onerror="this.replaceWith(document.createTextNode('${esc(iniciais(j.nome))}'))"></span>`;
-  }
-
   function linhaDuelo(d, comResultado) {
     const status = lado => {
       if (!comResultado) return ['', ''];
@@ -299,9 +115,11 @@
     </div></div>`;
   }
 
+  /* banner do bolão */
+  if (typeof bolao !== 'undefined' && bolao.ativo) $('bolao-faixa').hidden = false;
+
   /* próximo X1 */
-  $('prox-mes').textContent = proximo.mes;
-  $('prox-data').textContent = proximo.data;
+  $('prox-mes').textContent = proximo.destaque;
   $('prox-local').textContent = 'Local: ' + proximo.local;
   $('prox-endereco').textContent = proximo.endereco || '';
   $('prox-zap').href = 'https://wa.me/?text=' + encodeURIComponent(
@@ -375,34 +193,6 @@
   $('chips').querySelectorAll('button').forEach((b, i) => b.onclick = () => mostrarEdicao(i));
   mostrarEdicao(0);
 
-  /* tooltip: aparece 2 s depois de parar o mouse sobre nome ou foto */
-  const caixaTip = document.createElement('div');
-  caixaTip.className = 'tip';
-  caixaTip.setAttribute('role', 'tooltip');
-  document.body.appendChild(caixaTip);
-  let alvoTip = null, timerTip = null;
-
-  function esconderTip() {
-    clearTimeout(timerTip); alvoTip = null;
-    caixaTip.classList.remove('on');
-  }
-  function mostrarTip(el) {
-    caixaTip.textContent = el.dataset.tip;
-    const r = el.getBoundingClientRect(), t = caixaTip.getBoundingClientRect();
-    const x = Math.min(Math.max(8, r.left + r.width / 2 - t.width / 2), innerWidth - t.width - 8);
-    const y = r.top - t.height - 10 >= 8 ? r.top - t.height - 10 : r.bottom + 10;
-    caixaTip.style.left = x + 'px'; caixaTip.style.top = y + 'px';
-    caixaTip.classList.add('on');
-  }
-  document.addEventListener('mouseover', e => {
-    const el = e.target.closest('[data-tip]');
-    if (el === alvoTip) return;
-    esconderTip();
-    if (!el) return;
-    alvoTip = el;
-    timerTip = setTimeout(() => mostrarTip(el), 2000);
-  });
-  addEventListener('scroll', esconderTip, { passive: true });
 </script>
 </body>
 </html>

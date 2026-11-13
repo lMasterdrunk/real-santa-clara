@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bolão do X1 do Santa · Real Santa Clara</title>
+<meta name="description" content="Bolão do X1 do Santa: dê seus palpites nos duelos, acompanhe a pontuação e veja quem é o melhor palpiteiro.">
+<meta name="theme-color" content="#0a0505">
+<link rel="canonical" href="https://www.x1dosanta.com/bolao.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="X1 do Santa">
+<meta property="og:url" content="https://www.x1dosanta.com/bolao.html">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Bolão do X1 do Santa · participe!">
+<meta property="og:description" content="Dê seus palpites nos duelos do próximo X1 e concorra. Veja a pontuação e o ranking do bolão.">
+<meta property="og:image" content="https://www.x1dosanta.com/img/compartilhar.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/logo-x1-do-santa.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,600;0,800;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<!-- ============ SEÇÃO 1 · CABEÇALHO (mesmo logo do site) ============ -->
+<header id="secao-cabecalho" class="wrap">
+  <a class="logo-link" href="./" aria-label="Voltar ao site do X1 do Santa">
+    <img class="logo" src="img/logo-x1-do-santa.png" alt="X1 do Santa">
+  </a>
+  <div class="lema">★ VÁRZEA É NO SANTA! ★</div>
+  <a class="voltar" href="./">← Voltar ao site</a>
+  <div class="proximo">
+    <h1 class="titulo-ouro" id="b-titulo" style="font-size:clamp(44px,12vw,76px)">Bolão</h1>
+    <div class="risco"></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ SEÇÃO 2 · COMO PARTICIPAR ============ -->
+  <section id="secao-bolao-info" aria-labelledby="t-info">
+    <div class="faixa-titulo"><h2 id="t-info">Como participar</h2></div>
+    <p class="aviso regra" id="b-chamada"></p>
+    <p class="bolao-valor">Participação: <b id="b-valor"></b></p>
+    <p class="premio" id="b-premio" hidden>Prêmio acumulado: <b id="b-premio-valor"></b></p>
+    <p class="aviso" id="b-aviso"></p>
+    <p class="bolao-pix" id="b-pix" hidden>PIX: <b id="b-pix-chave"></b></p>
+  </section>
+
+  <!-- ============ SEÇÃO 3 · PONTUAÇÃO ============ -->
+  <section id="secao-pontuacao" aria-labelledby="t-pontos">
+    <div class="faixa-titulo"><h2 id="t-pontos">Pontuação</h2></div>
+    <ul class="pontos" id="b-pontos"></ul>
+  </section>
+
+  <!-- ============ SEÇÃO 4 · MEUS PALPITES ============ -->
+  <section id="secao-palpites" aria-labelledby="t-palpites">
+    <div class="faixa-titulo"><h2 id="t-palpites">Meus palpites</h2></div>
+    <p class="aviso" id="b-estado"></p>
+    <form id="form-bolao" novalidate autocomplete="off">
+      <div class="campo"><label for="f-nome">Seu nome</label>
+        <input id="f-nome" name="nome" type="text" maxlength="60" placeholder="Nome e sobrenome" required></div>
+      <div class="campo"><label for="f-zap">Seu WhatsApp (com DDD)</label>
+        <input id="f-zap" name="whatsapp" type="tel" inputmode="tel" maxlength="20" placeholder="(11) 90000-0000" required></div>
+      <p class="aviso">O WhatsApp é só para o organizador te achar. Ele não aparece no site.</p>
+      <div id="b-duelos"></div>
+      <button class="pincel ouro btn-enviar" id="b-enviar" type="submit">Enviar palpites</button>
+      <p class="msg" id="b-msg" role="status" hidden></p>
+    </form>
+  </section>
+
+  <!-- ============ SEÇÃO 5 · RANKING DO BOLÃO ============ -->
+  <section id="secao-ranking-bolao" aria-labelledby="t-rank-bolao">
+    <div class="faixa-titulo"><h2 id="t-rank-bolao">Ranking do bolão</h2></div>
+    <p class="premio" id="b-vencedores" hidden></p>
+    <p class="aviso" id="b-rank-aviso"></p>
+    <ol class="rank" id="b-rank"></ol>
+  </section>
+
+</main>
+
+<!-- ============ SEÇÃO 6 · RODAPÉ ============ -->
+<footer>
+  <strong class="f-azul">Real Santa Clara</strong>
+  <strong class="f-branco">Torcida Los 13</strong>
+  <strong class="f-vermelho">Equipe Tempo Ruim o Tempo Todo</strong>
+  <span class="f-frase" id="b-rodape">Várzea é no Santa! Respeito, amizade e futebol.</span>
+</footer>
+
+<script src="data.js"></script>
+<script src="comum.js"></script>
+<script src="bolao.js"></script>
+</body>
+</html>

@@ -37,6 +37,35 @@ const jogadores = {
   fumes:    { nome: "Fumes",               categoria: "esporte" },
 };
 
+/* BOLÃO (página bolao.html)
+   - ativo: true mostra o banner fixo à direita no site principal.
+   - endpoint: endereço do script do Google que grava e lê os palpites
+     (veja bolao-script/Code.gs). Vazio = palpites ainda fechados.
+   - prazo: depois disso ninguém mais envia palpite (o script também confere).
+   - pix: deixe vazio para NÃO mostrar a chave no site (passar só no privado).
+   - Resultados reais: preencha "resultado" em cada duelo do próximo X1,
+     ex.: resultado: { a: 2, b: 2, pen: "b" }  (pen = quem ganhou nos pênaltis
+     em caso de empate: "a" ou "b").                                          */
+const bolao = {
+  ativo: true,
+  endpoint: "https://script.google.com/macros/s/AKfycbyqh8m7lf6LnJjOlqHnWEsybDT-lGqbx2pO-wWscYE_5JuTY2bl0pQIYMfimRmUkcFs/exec",
+  prazo: "2027-02-26T19:00:00-03:00",
+  titulo: "Bolão X1 - Santa",
+  chamada: "Chegou a hora de testar quem realmente entende de futebol!",
+  valor: "R$ 20,00",
+  valorNumero: 20,
+  pix: "",
+  aviso: "Depois de enviar seus palpites, faça o pagamento e mande o comprovante no privado ao organizador. Só concorre quem pagou. Em caso de empate em 1º lugar, o prêmio é dividido igualmente entre os empatados.",
+  pontuacao: [
+    { pts: 4, texto: "Acertou o empate exato e o vencedor nos pênaltis" },
+    { pts: 3, texto: "Acertou o placar exato" },
+    { pts: 2, texto: "Acertou o empate e o vencedor nos pênaltis (placar diferente)" },
+    { pts: 1, texto: "Acertou apenas o vencedor" },
+    { pts: 0, texto: "Errou tudo" },
+  ],
+  rodape: "O ranking será atualizado após os confrontos. Não deixe para a última hora! Boa sorte a todos e que vença o melhor palpiteiro!",
+};
+
 /* EDIÇÕES ANTERIORES
    vencedor: id de quem ganhou, ou null se ainda não lançou.
    Para adicionar uma edição, copie um bloco { ... } inteiro. */
@@ -79,7 +108,7 @@ const edicoes = [
 
 /* PRÓXIMO X1 (aparece no topo do site) */
 const proximo = {
-  mes: "Fevereiro",
+  destaque: "26/02/2027 · 19h",   /* faixa vermelha do cabeçalho */
   data: "Sexta-feira, 26/02/2027 · Início às 19h",
   local: "CDC Vila Invernada",
   endereco: "Rua Raimundo Correia, 131",
