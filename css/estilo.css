@@ -270,3 +270,9 @@ footer .f-frase{display:block; margin-top:14px}
 @media (max-width:420px){ .resumo{grid-template-columns:repeat(2,1fr)} }
 
 .btn-copiar{margin-left:10px; border:0; cursor:pointer; font-size:16px; padding:.2em .8em}
+
+/* aviso em destaque (ex.: só o primeiro palpite vale) */
+.alerta{margin:6px 0 16px; padding:12px 14px; text-align:center; font-weight:800; font-size:clamp(18px,5vw,22px); line-height:1.15;
+  color:#111; background:linear-gradient(180deg,var(--ouro-claro),var(--ouro)); border-left:5px solid var(--vermelho);
+  box-shadow:0 0 22px rgba(247,198,0,.4)}
+.alerta b{font-family:Anton,Impact,sans-serif; font-style:italic; font-weight:400; text-transform:uppercase; letter-spacing:.5px}
