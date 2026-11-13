@@ -323,7 +323,7 @@
     const ed = edicoes[i];
     $('chips').querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', k === i));
     const falta = ed.duelos.filter(d => !d.vencedor).length;
-    $('ed-info').textContent = `${ed.data} · ${ed.local}` + (falta ? ` · ${falta} resultado${falta > 1 ? 's' : ''} a lançar` : '');
+    $('ed-info').textContent = [ed.data, ed.local].filter(Boolean).join(' · ') + (falta ? ` · ${falta} resultado${falta > 1 ? 's' : ''} a lançar` : '');
     $('ed-duelos').innerHTML = ed.duelos.map(d =>
       (d.principal ? '<div class="principal">★ JOGO PRINCIPAL ★</div>' : '') + linhaDuelo(d, true)).join('');
   }
