@@ -1,0 +1,3 @@
+Coloque aqui as fotos dos jogadores com o nome do id usado no data.js.
+Ex.: mariojr.jpg, nigeria.jpg, paizao.jpg
+Tamanho ideal: quadrada, ~400x400, menos de 100 KB.
