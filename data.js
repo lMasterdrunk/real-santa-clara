@@ -79,6 +79,8 @@ const proximo = {
   data: "26 de Fevereiro · Início às 19h",
   local: "CDC Vila Invernada",
   endereco: "Rua Raimundo Correia, 131",
+  /* texto usado para achar o local no Google Maps e no Waze */
+  busca: "CDC Vila Invernada, Rua Raimundo Correia, 131, Vila Invernada, São Paulo - SP",
   /* cinturões em jogo (aparecem acima dos duelos confirmados) */
   cinturoes: [
     { nome: "X1 Esporte",   imagem: "img/cinturao-esporte.png",  a: "nigeria", b: "nico" },
