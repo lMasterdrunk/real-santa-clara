@@ -22,7 +22,7 @@ const jogadores = {
   nigeria:  { nome: "Flávio (Nigéria)",    categoria: "esporte" },
   ivan:     { nome: "Ivan",                categoria: "veterano" },
   bruninho: { nome: "Bruninho",            categoria: "esporte" },
-  jony:     { nome: "Jhonny",              categoria: "veterano", frase: "Que iiiissooo! Ciclovia o Tempo Todo" },
+  jhonny:   { nome: "Jhonny",            categoria: "veterano", frase: "Que iiiissooo! Ciclovia o Tempo Todo" },
   caio:     { nome: "Caio CJ",             categoria: "esporte" },
   luan:     { nome: "Luan",                categoria: "esporte", frase: "Ao Infinito e Além!" },
   luizinho: { nome: "Luizinho",            categoria: "esporte" },
@@ -48,7 +48,7 @@ const edicoes = [
     duelos: [
       { a: "ivan",     b: "tiga",     vencedor: "ivan" },
       { a: "leozinho", b: "bruninho", vencedor: "bruninho" },
-      { a: "paizao",   b: "jony",     vencedor: "paizao" },
+      { a: "paizao",   b: "jhonny",   vencedor: "paizao" },
       { a: "caio",     b: "luan",     vencedor: "caio" },
       { a: "nigeria",  b: "luizinho", vencedor: "nigeria" },
       { a: "xavola",   b: "mariojr",  vencedor: "mariojr", principal: true },
@@ -80,15 +80,17 @@ const edicoes = [
 /* PRÓXIMO X1 (aparece no topo do site) */
 const proximo = {
   mes: "Fevereiro",
-  data: "26 de Fevereiro · Início às 19h",
+  data: "Sexta-feira, 26/02/2027 · Início às 19h",
   local: "CDC Vila Invernada",
   endereco: "Rua Raimundo Correia, 131",
   /* texto usado para achar o local no Google Maps e no Waze */
   busca: "CDC Vila Invernada, Rua Raimundo Correia, 131, Vila Invernada, São Paulo - SP",
+  /* regra exibida na seção dos cinturões */
+  regraCinturao: "Concorre ao cinturão quem o organizador do evento decidir. Sem chororô!",
   /* cinturões em jogo (aparecem acima dos duelos confirmados) */
   cinturoes: [
-    { nome: "X1 Esporte",   imagem: "img/cinturao-esporte.png",  a: "nigeria", b: "nico" },
-    { nome: "X1 Veterano",  imagem: "img/cinturao-veterano.png", a: "paizao",  b: "didi" },
+    { nome: "X1 Esporte",   imagem: "img/cinturao-esporte.png",  campeao: "nigeria", a: "nigeria", b: "nico" },
+    { nome: "X1 Veterano",  imagem: "img/cinturao-veterano.png", campeao: "paizao",  a: "paizao",  b: "didi" },
   ],
   duelos: [
     { a: "nigeria",    b: "nico" },

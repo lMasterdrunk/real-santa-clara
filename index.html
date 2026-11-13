@@ -6,8 +6,18 @@
 <title>X1 do Santa · Real Santa Clara</title>
 <meta name="description" content="X1 do Santa: o 1 contra 1 do Real Santa Clara. Ranking, edições e próximos duelos.">
 <meta name="theme-color" content="#0a0505">
-<meta property="og:title" content="X1 do Santa · Real Santa Clara">
-<meta property="og:image" content="img/logo-x1-do-santa.png">
+<link rel="canonical" href="https://www.x1dosanta.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="X1 do Santa">
+<meta property="og:url" content="https://www.x1dosanta.com/">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Próximo X1 do Santa · 26 de fevereiro às 19h">
+<meta property="og:description" content="Dois cinturões em jogo e 7 duelos no CDC Vila Invernada, Rua Raimundo Correia, 131. Veja os confrontos, o ranking e o histórico.">
+<meta property="og:image" content="https://www.x1dosanta.com/img/compartilhar.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="X1 do Santa: próximo X1 em 26 de fevereiro, CDC Vila Invernada">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/logo-x1-do-santa.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,9 +113,13 @@
   .mapa{margin:16px 0 0; padding:2px; background:var(--vermelho); filter:drop-shadow(0 0 8px rgba(209,22,43,.55))}
   .mapa[hidden]{display:none}
   .mapa iframe{display:block; width:100%; height:260px; border:0; background:var(--painel)}
-  .rota{margin:18px 0 0; text-align:center}
+  .rota{margin:18px 0 0; text-align:center; display:flex; flex-wrap:wrap; justify-content:center; gap:12px}
   .rota a{font-size:clamp(18px,5vw,24px); text-decoration:none; cursor:pointer}
   .rota a[hidden]{display:none}
+  .aviso.regra{color:var(--branco); font-weight:800; font-size:clamp(17px,4.6vw,21px); letter-spacing:.5px; margin:0 0 4px}
+  .aviso.regra[hidden]{display:none}
+  .campeao{margin:4px 0 10px; font-weight:800; font-size:clamp(16px,4.4vw,20px); letter-spacing:1.5px; text-transform:uppercase; color:var(--cinza)}
+  .campeao b{font-family:Anton,Impact,sans-serif; font-style:italic; font-weight:400; color:var(--ouro); letter-spacing:1px}
   .cinturao{margin-top:18px; text-align:center}
   .cinturao-img{display:block; height:136px; width:auto; max-width:100%; margin:0 auto; /* dobro da altura da linha do confronto */
     -webkit-mask-image:radial-gradient(ellipse 75% 85% at 50% 50%,#000 78%,transparent 100%);
@@ -206,6 +220,7 @@
   <!-- ============ SEÇÃO 2 · DOIS CINTURÕES EM JOGO ============ -->
   <section id="secao-cinturoes" aria-labelledby="t-cinturoes">
     <div class="faixa-titulo"><h2 id="t-cinturoes">Dois cinturões em jogo</h2></div>
+    <p class="aviso regra" id="prox-regra" hidden></p>
     <div id="prox-cinturoes"></div>
   </section>
 
@@ -219,7 +234,10 @@
       <iframe id="prox-mapa-frame" title="Localização no Google Maps" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     </div>
-    <p class="rota"><a class="pincel vermelho" id="prox-waze" target="_blank" rel="noopener" hidden>Abrir no Waze</a></p>
+    <p class="rota">
+      <a class="pincel vermelho" id="prox-waze" target="_blank" rel="noopener" hidden>Abrir no Waze</a>
+      <a class="pincel ouro" id="prox-zap" target="_blank" rel="noopener">Compartilhar no WhatsApp</a>
+    </p>
   </section>
 
   <!-- ============ SEÇÃO 4 · RANKING DOS PARTICIPANTES ============ -->
@@ -286,6 +304,9 @@
   $('prox-data').textContent = proximo.data;
   $('prox-local').textContent = 'Local: ' + proximo.local;
   $('prox-endereco').textContent = proximo.endereco || '';
+  $('prox-zap').href = 'https://wa.me/?text=' + encodeURIComponent(
+    `X1 do Santa: ${proximo.data} no ${proximo.local}, ${proximo.endereco}. ` +
+    `${proximo.cinturoes.length} cinturões em jogo e ${proximo.duelos.length} duelos! https://www.x1dosanta.com/`);
   if (proximo.busca) {
     const q = encodeURIComponent(proximo.busca);
     $('prox-mapa-frame').src = `https://www.google.com/maps?q=${q}&output=embed`;
@@ -293,9 +314,11 @@
     $('prox-waze').href = `https://waze.com/ul?q=${q}&navigate=yes`;
     $('prox-waze').hidden = false;
   }
+  if (proximo.regraCinturao) { $('prox-regra').textContent = proximo.regraCinturao; $('prox-regra').hidden = false; }
   $('prox-cinturoes').innerHTML = proximo.cinturoes.map(c =>
     `<div class="cinturao">
        <img class="cinturao-img" src="${esc(c.imagem)}" alt="Cinturão ${esc(c.nome)}">
+       ${c.campeao ? `<div class="campeao">Campeão atual: <b${tip(c.campeao)}>${esc(jog(c.campeao).nome)}</b></div>` : ''}
      </div>` + linhaDuelo(c, false)).join('');
   $('prox-duelos').innerHTML = proximo.duelos.map(d => linhaDuelo(d, false)).join('');
 
@@ -316,9 +339,10 @@
   const rankingTotal = Object.values(stats).sort((x, y) =>
     aproveitamento(y) - aproveitamento(x) || y.v - x.v || x.d - y.d ||
     jog(x.id).nome.localeCompare(jog(y.id).nome, 'pt-BR'));
+  const criterioRanking = 'Ordem por % de aproveitamento (vitórias ÷ jogos). Empate: mais vitórias, depois menos derrotas e, se persistir, ordem alfabética.';
   const avisoRanking = lancados < total
-    ? `${lancados} de ${total} resultados lançados. Ordem por % de aproveitamento.`
-    : 'Ordem por % de aproveitamento; empate desempata por mais vitórias.';
+    ? `${lancados} de ${total} resultados lançados. ${criterioRanking}`
+    : criterioRanking;
 
   function mostrarRanking(categoria) {
     ['veterano', 'esporte'].forEach(c => $('tab-' + c).setAttribute('aria-selected', c === categoria));
