@@ -24,7 +24,7 @@ const jogadores = {
   caio:     { nome: "Caio CJ",             categoria: "esporte" },
   luan:     { nome: "Luan",                categoria: "esporte" },
   luizinho: { nome: "Luizinho",            categoria: "esporte" },
-  jo:       { nome: "Jó",                  categoria: "esporte" },
+  jo:       { nome: "Jó",                  categoria: "veterano" },
   nico:     { nome: "Nico",                categoria: "esporte" },
   didi:     { nome: "Didi",                categoria: "veterano" },
   nene:     { nome: "Nenê",                categoria: "esporte" },
