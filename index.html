@@ -101,12 +101,10 @@
   .local .endereco{display:block; margin-top:10px; font-weight:800; font-size:clamp(17px,4.6vw,22px); letter-spacing:1px;
     color:var(--branco); text-transform:uppercase}
   .cinturao{margin-top:26px; text-align:center}
-  .cinturao-img{display:block; width:min(340px,86%); height:auto; margin:0 auto;
+  .cinturao-img{display:block; width:100%; height:auto; margin:0 auto;
     -webkit-mask-image:radial-gradient(ellipse 75% 85% at 50% 50%,#000 78%,transparent 100%);
             mask-image:radial-gradient(ellipse 75% 85% at 50% 50%,#000 78%,transparent 100%);
     filter:drop-shadow(0 0 14px rgba(247,198,0,.35))}
-  .cinturao-nome{text-align:center; margin:-4px 0 -2px}
-  .cinturao-nome .pincel{font-size:clamp(16px,4.4vw,22px)}
 
   /* avatar */
   .av{flex:none; width:44px; height:44px; border-radius:50%; overflow:hidden; display:grid; place-items:center;
@@ -263,7 +261,6 @@
   $('prox-cinturoes').innerHTML = proximo.cinturoes.map(c =>
     `<div class="cinturao">
        <img class="cinturao-img" src="${esc(c.imagem)}" alt="Cinturão ${esc(c.nome)}">
-       <div class="cinturao-nome"><span class="pincel vermelho">${esc(c.nome)}</span></div>
      </div>` + linhaDuelo(c, false)).join('');
   $('prox-duelos').innerHTML = proximo.duelos.map(d => linhaDuelo(d, false)).join('');
 
