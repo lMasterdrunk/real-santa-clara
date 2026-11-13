@@ -268,3 +268,5 @@ footer .f-frase{display:block; margin-top:14px}
 .ger-palpites b{color:var(--ouro)}
 .ger-vazio{padding:14px; text-align:center; color:var(--cinza); font-weight:600}
 @media (max-width:420px){ .resumo{grid-template-columns:repeat(2,1fr)} }
+
+.btn-copiar{margin-left:10px; border:0; cursor:pointer; font-size:16px; padding:.2em .8em}

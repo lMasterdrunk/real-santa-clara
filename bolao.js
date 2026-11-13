@@ -14,7 +14,17 @@ $('b-chamada').textContent = bolao.chamada;
 $('b-valor').textContent = bolao.valor;
 $('b-aviso').textContent = bolao.aviso;
 $('b-rodape').textContent = bolao.rodape || $('b-rodape').textContent;
-if (bolao.pix) { $('b-pix-chave').textContent = bolao.pix; $('b-pix').hidden = false; }
+if (!bolao.pix && bolao.pixMensagem) {
+  $('b-pix').innerHTML = `<b>${esc(bolao.pixMensagem)}</b>`; $('b-pix').hidden = false;
+} else if (bolao.pix) {
+  $('b-pix-chave').textContent = bolao.pix; $('b-pix').hidden = false;
+  $('b-pix-copiar').addEventListener('click', async () => {
+    const botao = $('b-pix-copiar');
+    try { await navigator.clipboard.writeText(bolao.pix); botao.textContent = 'Copiado!'; }
+    catch (_) { botao.textContent = 'Selecione e copie'; }
+    setTimeout(() => botao.textContent = 'Copiar', 2000);
+  });
+}
 $('b-pontos').innerHTML = bolao.pontuacao.map(p =>
   `<li><span class="pts">${p.pts}</span><span>${esc(p.texto)}</span></li>`).join('');
 
